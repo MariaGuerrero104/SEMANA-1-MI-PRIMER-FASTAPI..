@@ -1,0 +1,99 @@
+// =============================
+// CRUD en la colección AMBIENTE
+// Base de datos: INVENTARIO
+// =============================
+
+// 1. CREATE (Insertar documentos)
+db.AMBIENTE.insertOne({
+  ambiente: 101,
+  estacion: 5,
+  placa: "PC-001",
+  tipo: "Computador",
+  clase: "Portátil",
+  marca: "Dell",
+  estado: "Activo",
+  ubicacion: 1,
+  fecha: new Date(),
+  novedades: [],
+  retiros: [],
+  ingresos: [],
+  grupo: "GRUPO_A",
+  participantes: ["Nombre1", "Nombre2", "Nombre3"]
+});
+
+db.AMBIENTE.insertMany([
+  {
+    ambiente: 102,
+    estacion: 2,
+    placa: "PR-002",
+    tipo: "Proyector",
+    clase: "Epson",
+    marca: "Epson",
+    estado: "Activo",
+    ubicacion: 2,
+    fecha: new Date(),
+    novedades: [],
+    retiros: [],
+    ingresos: [],
+    grupo: "GRUPO_A",
+    participantes: ["Nombre1", "Nombre2", "Nombre3"]
+  },
+  {
+    ambiente: 103,
+    estacion: 3,
+    placa: "PC-003",
+    tipo: "Computador",
+    clase: "Escritorio",
+    marca: "HP",
+    estado: "Inactivo",
+    ubicacion: 3,
+    fecha: new Date(),
+    novedades: [],
+    retiros: [],
+    ingresos: [],
+    grupo: "GRUPO_A",
+    participantes: ["Nombre1", "Nombre2", "Nombre3"]
+  }
+]);
+
+// 2. READ (Consultar documentos)
+// Obtener todos los documentos
+db.AMBIENTE.find();
+
+// Obtener un documento específico
+db.AMBIENTE.findOne({ ambiente: 101 });
+
+// Obtener documentos filtrados por estado
+db.AMBIENTE.find({ estado: "Activo" });
+
+// Proyección: solo mostrar ambiente y tipo
+db.AMBIENTE.find({}, { ambiente: 1, tipo: 1, _id: 0 });
+
+// 3. UPDATE (Actualizar documentos)
+// Actualizar un campo en un documento
+db.AMBIENTE.updateOne(
+  { ambiente: 101 },
+  { $set: { estado: "En mantenimiento" } }
+);
+
+// Agregar un valor a un array (ejemplo: novedades)
+db.AMBIENTE.updateOne(
+  { ambiente: 101 },
+  { $push: { novedades: "Pantalla dañada" } }
+);
+
+// Actualizar múltiples documentos
+db.AMBIENTE.updateMany(
+  { estado: "Inactivo" },
+  { $set: { estado: "Revisión pendiente" } }
+);
+
+// 4. DELETE (Eliminar documentos)
+// Eliminar un documento
+db.AMBIENTE.deleteOne({ ambiente: 103 });
+
+// Eliminar múltiples documentos
+db.AMBIENTE.deleteMany({ estado: "Revisión pendiente" });
+
+// Eliminar todos los documentos (⚠️ cuidado)
+db.AMBIENTE.deleteMany({});
